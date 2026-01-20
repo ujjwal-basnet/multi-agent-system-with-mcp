@@ -21,6 +21,7 @@ class AppConfig(BaseSettings):
     OPENROUTER_API_KEY: str
     GEMINAI_API_KEY2:str
     PINECONE_API_KEY:str
+    COHERE_API:str
 
     # Model config
     GEMINI_MODEL: str = "gemini-2.5-flash-lite"
@@ -35,5 +36,5 @@ class AppConfig(BaseSettings):
         extra = "ignore"   ## pydantic will throw error if we have mention other Variable  other then mention here , 
     )
 # Singleton instance for global access
-settings = AppConfig()
+config = AppConfig()
 
