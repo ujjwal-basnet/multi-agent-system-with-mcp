@@ -7,7 +7,8 @@ from tenacity import retry, stop_after_attempt, wait_random_exponential
 from pydantic import BaseModel, Field
 import uuid
 import textwrap
-from pinecone import Pinecone, ServerlessSpec
+from pinecone import  ServerlessSpec
+from llm_clients import cohere_embedding_client
 
 
 
@@ -41,13 +42,13 @@ def chunk_text(text: str, chunk_size: int = 400, overlap: int = 50) -> List[str]
 # Embedding Helpers
 
 
-@retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
+@retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(2))
 def get_embedding_batch(texts: List[str]) -> List[List[float]]:
     texts = [t.replace("\n", " ") for t in texts]
     return cohere_embedding_client.embed_documents(texts)
 
 
-@retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
+@retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(2))
 def get_embedding(text: str) -> List[float]:
     return get_embedding_batch([text])[0]
 
@@ -107,9 +108,11 @@ def display_mcp(message: MCPMessage, title: str = "MCP Message") -> None:
 # Pinecone Query Helper
 
 def query_pinecone(
+    index ,
     query_text: str,
     namespace: str,
     top_k: int = 1,
+
 ):
     query_embedding = get_embedding(query_text)
     response = index.query(
