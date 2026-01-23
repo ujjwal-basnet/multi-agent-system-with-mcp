@@ -50,29 +50,6 @@ def get_embedding(text: str) -> List[float]:
 
 
 
-# LLM Call Helper
-
-
-@retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
-def call_llm(
-    system_prompt: str,
-    user_prompt: str,
-    temperature: float = 1.0,
-    json_mode: bool = False,
-):
-    response_format = {"type": "json_object"} if json_mode else {"type": "text"}
-
-    response = openai_client.chat.completions.create(
-        model=GENERATION_MODEL,
-        response_format=response_format,
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
-        ],
-        temperature=temperature,
-    )
-    return response.choices[0].message.content.strip()
-
 
 # MCP Models
 
