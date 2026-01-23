@@ -90,6 +90,54 @@ USER_RESEARCH_SYNTHESIS_PROMPT = Prompt(
     required_vars=["topic", "sources"]
 )
 
+WRITER_SYSTEM_BLUEPRINT_PROMPT = Prompt(
+    prompt_text=(
+        "You are an expert content generation AI.\n"
+        "Your task is to generate content based on the provided RESEARCH FINDINGS.\n"
+        "Crucially, you MUST structure, style, and constrain your output according to the "
+        "rules defined in the SEMANTIC BLUEPRINT provided below.\n"
+        "--- SEMANTIC BLUEPRINT (JSON) ---\n"
+        "{blueprint_json_string}\n"
+        "--- END SEMANTIC BLUEPRINT ---\n"
+        "Adhere strictly to the blueprint's instructions, style guides, and goals.\n"
+        "The blueprint defines HOW you write; the research defines WHAT you write about."
+    ),
+    application="Writer-Agent-Blueprint",
+    creator="Ujjwal-AI-Team",
+    date_created=datetime(2026, 1, 23),
+    required_vars=["blueprint_json_string"]
+)
+
+USER_RESEARCH_FACTS_PROMPT = Prompt(
+    prompt_text=(
+        "--- RESEARCH FINDINGS ---\n"
+        "{facts}\n"
+        "--- END RESEARCH FINDINGS ---\n"
+        "Generate the content now."
+    ),
+    application="User-Writer-Prompt",
+    creator="Ujjwal-AI-Team",
+    date_created=datetime(2026, 1, 23),
+    required_vars=["facts"]
+)
+
+
+GOAL_ANALYST = Prompt(
+    prompt_text=(
+        "You are an expert goal analyst.\n"
+        "Analyze the user's high-level goal and extract two components:\n"
+        "1. 'intent_query': A descriptive phrase summarizing the desired style, tone, "
+        "or format, optimized for searching a context library (e.g., 'suspenseful narrative blueprint', "
+        "'objective technical explanation structure').\n"
+        "2. 'topic_query': A concise phrase summarizing the factual subject matter required "
+        "(e.g., 'Juno mission objectives and power', 'Apollo 11 landing details').\n"
+        "Respond ONLY with a JSON object containing these two keys."
+    ),
+    application="Goal-Analysis-System",
+    creator="Ujjwal-AI-Team",
+    date_created=datetime(2026, 1, 23),
+    required_vars=[]  # no dynamic variables needed
+)
 
 
 
@@ -100,9 +148,15 @@ PROMPTS: Dict[str, Prompt] = {
     "system:validator_agent": VALIDATOR_AGENT_PROMPT,
     "user:validator_agent": USER_VALIDATOR_AGENT_PROMPT,
     "system:research_synthesis_ai":RESEARCH_SYNTHESIS_AI_PROMPT,
-    "user:research_synthesis_ai": USER_RESEARCH_SYNTHESIS_PROMPT
+    "user:research_synthesis_ai": USER_RESEARCH_SYNTHESIS_PROMPT,
+    "system:writer_system_blueprint": WRITER_SYSTEM_BLUEPRINT_PROMPT,
+    "user:writer_system_blueprint":WRITER_SYSTEM_BLUEPRINT_PROMPT,
+    "system:writer_blueprint": WRITER_SYSTEM_BLUEPRINT_PROMPT,
+    "user:research_facts": USER_RESEARCH_FACTS_PROMPT,
+    "system:goal_analyst":GOAL_ANALYST}
 
-}
+
+
 
 # ---- Helper Function ----
 def get_prompt(role: str, agent_type: str, **kwargs) -> str:
