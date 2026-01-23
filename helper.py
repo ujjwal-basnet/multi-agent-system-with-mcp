@@ -7,6 +7,9 @@ from tenacity import retry, stop_after_attempt, wait_random_exponential
 from pydantic import BaseModel, Field
 import uuid
 import textwrap
+from pinecone import Pinecone, ServerlessSpec
+
+
 
 # Tokenization Helpers
 
