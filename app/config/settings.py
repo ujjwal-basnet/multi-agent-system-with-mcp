@@ -4,7 +4,6 @@
 ## so if other models does't work then i am just lazy lol 
  
 
-
 from dotenv import load_dotenv ## always import this on top to make to ensure all enviroment  variables are loaded 
 from pydantic_settings import BaseSettings
 from pydantic import ConfigDict 
@@ -38,7 +37,12 @@ class AppConfig(BaseSettings):
     COHERE_MODEL:str="command-a-03-2025"
     
     #pinecone -> vector embedding 
-    PINECONE_API_KEY:str    
+    PINECONE_API_KEY:str   
+    DEFAULT_INDEX_NAME: str = "genai-end-to-end"
+    NAMESPACE_KNOWLEDGE: str = "KnowledgeStore"
+    NAMESPACE_CONTEXT: str = "ContextStore"
+    NAMESPACE_USER: str = "UserStore"
+        
     
     #logfire -> logging
     LOGFIRE_TOKEN: str 
