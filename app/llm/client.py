@@ -1,5 +1,5 @@
 from app.config.settings import config
-from pydantic_ai import Agent, NativeOutput, StructuredDict
+from pydantic_ai import Agent, NativeOutput, StructuredDict, Embedder
 from pydantic_ai.models.fallback import FallbackModel
 from pydantic_ai.models.openai import OpenAIChatModel
 from tenacity import retry, stop_after_attempt, wait_random_exponential
@@ -42,6 +42,8 @@ def call_llm_robust(system_prompt: str, user_prompt: str, json_mode: bool = Fals
     
     
 
+    
+    
         
         
 
@@ -49,7 +51,7 @@ def call_llm_robust(system_prompt: str, user_prompt: str, json_mode: bool = Fals
 
 
 
-
+# will add others client too but not now  """
 
 
 
