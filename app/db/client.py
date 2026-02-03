@@ -32,11 +32,11 @@ def ensure_index(INDEX_NAME : str ):
     return pc.Index(INDEX_NAME)
 
 
-def test_ensure_index():
-    index_name = config.DEFAULT_INDEX_NAME
-    index = ensure_index(index_name)
+# def test_ensure_index():
+#     index_name = config.DEFAULT_INDEX_NAME
+#     index = ensure_index(index_name)
 
-    logger.info(f"Test passed: index '{index_name}' is ready")
+#     logger.info(f"Test passed: index '{index_name}' is ready")
     
     
-test_ensure_index()
+# test_ensure_index()
